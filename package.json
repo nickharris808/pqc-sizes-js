@@ -1,0 +1,36 @@
+{
+  "name": "pqc-sizes",
+  "version": "0.1.0",
+  "description": "Post-quantum object sizes, fragmentation counts, and the two-sided reassembly window. Zero dependencies.",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "keywords": [
+    "post-quantum",
+    "pqc",
+    "ml-kem",
+    "ml-dsa",
+    "fragmentation",
+    "mtu",
+    "security"
+  ],
+  "author": "PQC Migration Safety Lab",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nickharris808/pqc-sizes-js"
+  }
+}
