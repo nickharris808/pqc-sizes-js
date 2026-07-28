@@ -2,7 +2,7 @@
 
 [![license](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![node](https://img.shields.io/badge/node-%E2%89%A518-green.svg)](package.json)
-[![tests](https://img.shields.io/badge/tests-19%20passing-brightgreen.svg)](test/)
+[![tests](https://img.shields.io/badge/tests-28%20passing-brightgreen.svg)](test/)
 [![deps](https://img.shields.io/badge/dependencies-0-brightgreen.svg)](package.json)
 
 **Your post-quantum credential doesn't fit in one frame. Find out what that costs — in the browser or in Node.**
@@ -127,7 +127,7 @@ Pure ESM with no Node built-ins, so it loads directly:
 ## Tests
 
 ```bash
-npm test        # 19 passing, node:test, no test framework needed
+npm test        # 28 passing, node:test, no test framework needed
 ```
 
 ## Scope

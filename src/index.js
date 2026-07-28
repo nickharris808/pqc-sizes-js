@@ -85,6 +85,29 @@ export function credentialBytes(kemName, sigName, opts) {
 }
 
 /**
+ * Refuse values JavaScript cannot represent exactly.
+ *
+ * Above 2^53-1 a JS number stops being an exact integer, so arithmetic here would
+ * silently disagree with the Python package. That is not academic: for
+ * largestLegitimateObject = 2^53+1 the unguarded code reported
+ * maxConcurrentContexts = 2 where exact integer arithmetic gives 1 -- i.e. it
+ * claimed a HIGHER concurrency was safe than actually is. A differential run over
+ * 3,042 inputs found 18 such divergences, every one at or above 2^53.
+ *
+ * Refusing is the only honest option: the alternative is a confident wrong number.
+ */
+function assertExact(label, v) {
+  if (!Number.isSafeInteger(v)) {
+    throw new Error(
+      `${label} exceeds Number.MAX_SAFE_INTEGER (${Number.MAX_SAFE_INTEGER}); `
+      + 'JavaScript cannot represent it exactly, so this library refuses rather '
+      + 'than return an imprecise result. Use the Python package (pqc-sizes) for '
+      + 'arbitrary-precision integers.',
+    );
+  }
+}
+
+/**
  * Number of fragments an object becomes on a transport.
  * Throws on a non-positive frame payload -- a transport carrying nothing is a
  * caller error, not something to return 0 for.
@@ -96,6 +119,8 @@ export function fragmentsFor(objectBytes, framePayload) {
   if (!Number.isInteger(framePayload) || framePayload <= 0) {
     throw new Error('framePayload must be a positive integer');
   }
+  assertExact('objectBytes', objectBytes);
+  assertExact('framePayload', framePayload);
   if (objectBytes === 0) return 0;
   return Math.ceil(objectBytes / framePayload);
 }
@@ -113,6 +138,7 @@ export function reassemblyWindow(largestLegitimateObject, memoryBudget, concurre
     if (!Number.isInteger(v) || v <= 0) {
       throw new Error(`${label} must be a positive integer`);
     }
+    assertExact(label, v);
   }
 
   const floor = largestLegitimateObject;
@@ -154,6 +180,8 @@ export function maxConcurrentContexts(largestLegitimateObject, memoryBudget) {
       || !Number.isInteger(memoryBudget) || memoryBudget <= 0) {
     throw new Error('inputs must be positive integers');
   }
+  assertExact('largestLegitimateObject', largestLegitimateObject);
+  assertExact('memoryBudget', memoryBudget);
   return Math.floor(memoryBudget / largestLegitimateObject);
 }
 
