@@ -39,7 +39,7 @@ not an error — and it's arithmetic, so it can run anywhere, including a browse
 ## Install
 
 ```bash
-npm install pqc-sizes        # once published
+npm install github:nickharris808/pqc-sizes-js
 ```
 
 ## Quickstart
@@ -146,6 +146,23 @@ families, is what the closed core does. Relevant subject matter is covered by a 
 provisional patent application. For commercial use of the full envelope, open a
 [GitHub Discussion](https://github.com/nickharris808) or an issue on this repository.
 
+## Honest scope
+
+**What this proves.** The same arithmetic as the Python package, and a test
+asserts the two agree on the documented values.
+
+**What it does NOT prove.** Everything in
+[`pqc-sizes`' honest scope](https://github.com/nickharris808/pqc-sizes#honest-scope)
+applies here too.
+
+**One JavaScript-specific limit.** Numbers are IEEE doubles, so integers above
+`2^53 - 1` are not exact. A differential run over 3,042 inputs found 18
+divergences from Python, all at or above that bound — and the worst reported a
+*higher* safe concurrency than exact arithmetic allows. Rather than return a
+number it cannot stand behind, this library **throws** above
+`Number.MAX_SAFE_INTEGER` and points you at the Python package. Realistic inputs
+are nowhere near that bound.
+
 ---
 
 ## The PQC migration toolkit
@@ -165,7 +182,9 @@ Nine free tools for teams moving authenticated key exchange to post-quantum. The
 | [pqc-formal-corpus](https://huggingface.co/datasets/nickh007/pqc-formal-corpus) | 122 named formal results, 6 provers | HF |
 | [pqc-explorer](https://huggingface.co/spaces/nickh007/pqc-explorer) | Try it in your browser, no install | HF Space |
 
-**Start here:** [`pqc-sizes`](https://github.com/nickharris808/pqc-sizes) tells you in five seconds whether your credential fragments and whether a safe cap exists. [`pqc-explorer`](https://huggingface.co/spaces/nickh007/pqc-explorer) does the same in a browser.
+**New here?** The [end-to-end tutorial](https://github.com/nickharris808/pqc-sizes/blob/main/TUTORIAL.md) walks one realistic migration through all of them in about ten minutes: sizes -> window -> CI gate -> benchmark.
+
+**In a hurry?** [`pqc-sizes`](https://github.com/nickharris808/pqc-sizes) tells you in five seconds whether your credential fragments and whether a safe cap exists. [`pqc-explorer`](https://huggingface.co/spaces/nickh007/pqc-explorer) does the same in a browser, with no install.
 
 ### The closed core
 
