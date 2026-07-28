@@ -18,6 +18,8 @@ reassemblyWindow(12000, 32768, 3).explain();
 
 Zero dependencies. Pure ESM. No crypto, no network, no telemetry.
 
+**📖 Full documentation, tutorial and conceptual guide: <https://nickharris808.github.io/pqc-toolkit/>**
+
 ---
 
 ## Why this exists
